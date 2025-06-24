@@ -179,10 +179,12 @@ const MilestonePanel = ({ milestones }: { milestones: Startup["milestones"] }) =
                 <Users size={16} className="mr-1 text-gray-400" />
                 {startup.teamSize} Team Members
               </div>
+              {/*
               <div className="flex items-center">
                 <Building2 size={16} className="mr-1 text-gray-400" />
                 Milestone: {startup.stage.charAt(0).toUpperCase() + startup.stage.slice(1)}
               </div>
+              */}
             </div>
           </div>
         </div>
