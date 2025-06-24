@@ -21,6 +21,53 @@ const StartupProfile = () => {
   const [investmentSuccess, setInvestmentSuccess] = useState(false);
   
   const startup = id ? getStartupById(id) : undefined;
+
+  // Helper component for milestone display
+const MilestonePanel = ({ milestones }: { milestones: Startup["milestones"] }) => {
+  if (!milestones) return null;
+  return (
+    <div className="w-full my-6 px-6 py-4 bg-gray-50 border border-gray-200 rounded-lg">
+      <div className="flex items-center mb-3">
+        <CheckCircle className="text-green-500 mr-2" size={18} />
+        <span className="font-semibold text-gray-800 text-lg">Milestones Achieved</span>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {Object.entries(milestones).map(([category, stages]) => {
+          // Get stages with at least one checked milestone
+          const stagesWithTrue = Object.entries(stages || {}).map(([stage, checklist]) => {
+            const trueMilestones = Object.entries(checklist || {}).filter(([_, checked]) => checked);
+            if (trueMilestones.length === 0) return null;
+            return (
+              <div key={stage} className="mb-2">
+                <div className="font-medium text-primary-700 text-xs uppercase tracking-wide mb-1">{stage}</div>
+                <div className="flex flex-wrap gap-2">
+                  {trueMilestones.map(([milestone]) => (
+                    <span
+                      key={milestone}
+                      className="inline-flex items-center px-2 py-1 rounded bg-green-100 text-green-800 text-xs font-semibold border border-green-200"
+                    >
+                      <CheckCircle size={14} className="mr-1 text-green-500" />
+                      {milestone}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            );
+          }).filter(Boolean);
+
+          if (stagesWithTrue.length === 0) return null;
+
+          return (
+            <div key={category}>
+              <div className="text-sm font-bold text-gray-700 mb-2">{category.toUpperCase()}</div>
+              {stagesWithTrue}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
   
   useEffect(() => {
     if (!startup) {
@@ -139,6 +186,15 @@ const StartupProfile = () => {
             </div>
           </div>
         </div>
+      </motion.div>
+
+      {/** Milestone */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <MilestonePanel milestones={startup.milestones} />
       </motion.div>
       
       {/* Main Content */}
