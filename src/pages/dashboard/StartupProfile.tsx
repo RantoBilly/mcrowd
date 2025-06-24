@@ -158,7 +158,7 @@ const MilestonePanel = ({ milestones }: { milestones: Startup["milestones"] }) =
                   <Button 
                     variant="primary" 
                     size="md"
-                    onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })}
+                    onClick={() => window.scrollTo({ top: (document.body.scrollHeight - window.innerHeight) / 2, behavior: 'smooth' })}
                   >
                     Invest Now
                   </Button>
