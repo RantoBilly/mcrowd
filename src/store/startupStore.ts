@@ -1,5 +1,19 @@
 import { create } from 'zustand';
 
+// Milestone update
+export type MilestoneCategory = "Product" | "Market" | "Organization";
+export type MilestoneStage = "Pre-Seed" | "Seed" | "Series A+";
+
+export interface MilestoneChecklist {
+  [milestone: string]: boolean;
+}
+
+export interface StartupMilestones {
+  [category in MilestoneCategory]?: {
+    [stage in MilestoneStage]?: MilestoneChecklist;
+  }
+}
+
 export interface Startup {
   id: string;
   name: string;
@@ -21,6 +35,7 @@ export interface Startup {
   aiScore: number; // 0-100
   tags: string[];
   businessCapital: number;
+  milestones: StartupMilestones; // Update milestones
 }
 
 export interface StartupState {
@@ -55,7 +70,60 @@ const MOCK_STARTUPS: Startup[] = [
     returnPotential: 'high',
     aiScore: 85,
     tags: ['sustainability', 'renewable energy', 'cleantech'],
-    businessCapital: 8000
+    businessCapital: 8000,
+    milestones: {
+      Product: {
+        "Pre-Seed": {
+          "Problem identified and validated": true,
+          "Clear value proposition": true,
+          "Prototype or interactive mockup": true,
+        },
+        Seed: {
+          "MVP tested in the field": true,
+          "First user feedback": true,
+          "Start of retention": true,
+        },
+        "Series A+": {
+          "Product stabilized": true,
+          "Clear roadmap": true,
+          "Technical scalability validated": true,
+        }
+      },
+      Market: {
+        "Pre-Seed": {
+          "User interviews": true,
+          "Early adopters engaged": false,
+        },
+        Seed: {
+          "First revenues": true,
+          "Tracked traction KPIs (CAC, LTV, churn...)": true,
+          "Acquisition channels tested": false,
+        },
+        "Series A+": {
+          "Significant revenue": false,
+          "Monthly growth": true,
+          "Market fit confirmed": true,
+          "High retention and NPS": false,
+        },
+      },
+      Organization: {
+      "Pre-Seed": {
+        "Complementary founding team": true,
+        "Company status": true,
+        "NDA and clear role allocation": false,
+      },
+      Seed: {
+        "First key recruitments": true,
+        "Basic governance in place": false,
+        "Beginning of process structuring": true,
+      },
+      "Series A+": {
+        "More robust HR structure": true,
+        "Operational KPIs": false,
+        "Board or advisory committee in place": true,
+      }
+    }
+    }
   },
   {
     id: '2',
@@ -77,7 +145,60 @@ const MOCK_STARTUPS: Startup[] = [
     returnPotential: 'high',
     aiScore: 92,
     tags: ['healthcare', 'AI', 'medtech', 'diagnostics'],
-    businessCapital: 4000
+    businessCapital: 4000,
+    milestones: {
+      Product: {
+        "Pre-Seed": {
+          "Problem identified and validated": true,
+          "Clear value proposition": false,
+          "Prototype or interactive mockup": true,
+        },
+        Seed: {
+          "MVP tested in the field": true,
+          "First user feedback": false,
+          "Start of retention": false,
+        },
+        "Series A+": {
+          "Product stabilized": false,
+          "Clear roadmap": true,
+          "Technical scalability validated": false,
+        }
+      },
+      Market: {
+        "Pre-Seed": {
+          "User interviews": true,
+          "Early adopters engaged": false,
+        },
+        Seed: {
+          "First revenues": true,
+          "Tracked traction KPIs (CAC, LTV, churn...)": true,
+          "Acquisition channels tested": false,
+        },
+        "Series A+": {
+          "Significant revenue": false,
+          "Monthly growth": false,
+          "Market fit confirmed": true,
+          "High retention and NPS": false,
+        },
+      },
+      Organization: {
+      "Pre-Seed": {
+        "Complementary founding team": true,
+        "Company status": true,
+        "NDA and clear role allocation": false,
+      },
+      Seed: {
+        "First key recruitments": true,
+        "Basic governance in place": true,
+        "Beginning of process structuring": true,
+      },
+      "Series A+": {
+        "More robust HR structure": true,
+        "Operational KPIs": false,
+        "Board or advisory committee in place": true,
+      }
+    }
+    }
   },
   {
     id: '3',
@@ -99,7 +220,60 @@ const MOCK_STARTUPS: Startup[] = [
     returnPotential: 'medium',
     aiScore: 78,
     tags: ['fintech', 'blockchain', 'small business', 'accounting'],
-    businessCapital: 6500
+    businessCapital: 6500,
+    milestones: {
+      Product: {
+        "Pre-Seed": {
+          "Problem identified and validated": true,
+          "Clear value proposition": false,
+          "Prototype or interactive mockup": true,
+        },
+        Seed: {
+          "MVP tested in the field": true,
+          "First user feedback": true,
+          "Start of retention": false,
+        },
+        "Series A+": {
+          "Product stabilized": false,
+          "Clear roadmap": true,
+          "Technical scalability validated": true,
+        }
+      },
+      Market: {
+        "Pre-Seed": {
+          "User interviews": true,
+          "Early adopters engaged": true,
+        },
+        Seed: {
+          "First revenues": true,
+          "Tracked traction KPIs (CAC, LTV, churn...)": false,
+          "Acquisition channels tested": false,
+        },
+        "Series A+": {
+          "Significant revenue": true,
+          "Monthly growth": true,
+          "Market fit confirmed": true,
+          "High retention and NPS": true,
+        },
+      },
+      Organization: {
+      "Pre-Seed": {
+        "Complementary founding team": true,
+        "Company status": true,
+        "NDA and clear role allocation": false,
+      },
+      Seed: {
+        "First key recruitments": true,
+        "Basic governance in place": false,
+        "Beginning of process structuring": true,
+      },
+      "Series A+": {
+        "More robust HR structure": true,
+        "Operational KPIs": true,
+        "Board or advisory committee in place": true,
+      }
+    }
+    }
   },
   {
     id: '4',
@@ -121,7 +295,60 @@ const MOCK_STARTUPS: Startup[] = [
     returnPotential: 'high',
     aiScore: 88,
     tags: ['education', 'VR', 'edtech', 'immersive learning'],
-    businessCapital: 9500
+    businessCapital: 9500,
+    milestones: {
+      Product: {
+        "Pre-Seed": {
+          "Problem identified and validated": true,
+          "Clear value proposition": true,
+          "Prototype or interactive mockup": true,
+        },
+        Seed: {
+          "MVP tested in the field": true,
+          "First user feedback": true,
+          "Start of retention": true,
+        },
+        "Series A+": {
+          "Product stabilized": true,
+          "Clear roadmap": true,
+          "Technical scalability validated": true,
+        }
+      },
+      Market: {
+        "Pre-Seed": {
+          "User interviews": true,
+          "Early adopters engaged": false,
+        },
+        Seed: {
+          "First revenues": false,
+          "Tracked traction KPIs (CAC, LTV, churn...)": false,
+          "Acquisition channels tested": true,
+        },
+        "Series A+": {
+          "Significant revenue": true,
+          "Monthly growth": true,
+          "Market fit confirmed": true,
+          "High retention and NPS": true,
+        },
+      },
+      Organization: {
+      "Pre-Seed": {
+        "Complementary founding team": true,
+        "Company status": true,
+        "NDA and clear role allocation": true,
+      },
+      Seed: {
+        "First key recruitments": true,
+        "Basic governance in place": true,
+        "Beginning of process structuring": false,
+      },
+      "Series A+": {
+        "More robust HR structure": true,
+        "Operational KPIs": true,
+        "Board or advisory committee in place": true,
+      }
+    }
+    }
   },
   {
     id: '5',
@@ -143,7 +370,60 @@ const MOCK_STARTUPS: Startup[] = [
     returnPotential: 'medium',
     aiScore: 76,
     tags: ['agriculture', 'IoT', 'AI', 'sustainability'],
-    businessCapital: 7000
+    businessCapital: 7000,
+    milestones: {
+      Product: {
+        "Pre-Seed": {
+          "Problem identified and validated": true,
+          "Clear value proposition": true,
+          "Prototype or interactive mockup": false,
+        },
+        Seed: {
+          "MVP tested in the field": true,
+          "First user feedback": false,
+          "Start of retention": false,
+        },
+        "Series A+": {
+          "Product stabilized": false,
+          "Clear roadmap": true,
+          "Technical scalability validated": true,
+        }
+      },
+      Market: {
+        "Pre-Seed": {
+          "User interviews": true,
+          "Early adopters engaged": true,
+        },
+        Seed: {
+          "First revenues": true,
+          "Tracked traction KPIs (CAC, LTV, churn...)": true,
+          "Acquisition channels tested": false,
+        },
+        "Series A+": {
+          "Significant revenue": false,
+          "Monthly growth": true,
+          "Market fit confirmed": true,
+          "High retention and NPS": false,
+        },
+      },
+      Organization: {
+      "Pre-Seed": {
+        "Complementary founding team": true,
+        "Company status": true,
+        "NDA and clear role allocation": false,
+      },
+      Seed: {
+        "First key recruitments": true,
+        "Basic governance in place": false,
+        "Beginning of process structuring": true,
+      },
+      "Series A+": {
+        "More robust HR structure": true,
+        "Operational KPIs": false,
+        "Board or advisory committee in place": true,
+      }
+    }
+    }
   }
 ];
 
