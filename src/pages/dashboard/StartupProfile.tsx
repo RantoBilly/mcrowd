@@ -110,7 +110,6 @@ const MilestonePanel = ({ milestones }: { milestones: Startup["milestones"] }) =
     </div>
   );
 };
-
   
   useEffect(() => {
     if (!startup) {
